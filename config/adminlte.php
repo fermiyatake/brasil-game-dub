@@ -437,6 +437,31 @@ return [
     */
 
     'plugins' => [
+        'Slugify' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/speakingurl/14.0.1/speakingurl.min.js'
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/js/jquery.slugify.min.js',
+                ],
+            ],
+        ],
+        'Inputmask' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/js/jquery.inputmask.min.js',
+                ],
+            ],
+        ],
         'Datatables' => [
             'active' => false,
             'files' => [
