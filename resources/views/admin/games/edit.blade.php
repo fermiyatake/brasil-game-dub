@@ -62,6 +62,12 @@
                             <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </div>
+
+                    <div class="card card-dark" id="openModal" role="button" data-toggle="modal" data-target="#modalCover">
+                        <div class="card-header rounded-0">
+                            <h3 class="card-title">Capa do Game</h3>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-6">
@@ -98,6 +104,75 @@
                 </div>
             </div>
         </form>
+
+        <div class="row" id="accordionProducers">
+            <div class="col-md-12" id="producers" data-toggle="collapse" data-target="#collapseProducers" aria-expanded="false" aria-controls="collapseProducers">
+                <div class="card card-secondary" role="button">
+                    <div class="card-header rounded-0">
+                        <h3 class="card-title">Elenco de Produtores</h3>
+                    </div>
+                    
+                    <div class="collapse" id="collapseProducers" aria-labelledby="producers" data-parent="#accordionProducers">
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input">
+                                <label class="form-check-label text-dark text-bold">Ativo</label>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="accordionVoices">
+            <div class="col-md-12" id="voices" data-toggle="collapse" data-target="#collapseVoices" aria-expanded="false" aria-controls="collapseVoices">
+                <div class="card card-primary" role="button">
+                    <div class="card-header rounded-0">
+                        <h3 class="card-title">Elenco de Vozes</h3>
+                    </div>
+                    
+                    <div class="collapse" id="collapseVoices" aria-labelledby="voices" data-parent="#accordionVoices">
+                        <div class="card-body" >
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input">
+                                <label class="form-check-label text-dark text-bold">Ativo</label>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="modalCover">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Alterar Capa</h5>
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <small>Tamanhos recomendados: <b>320x480 - 600x900 - 920x1080 - 1000x1500</b></small>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Atualizar</button>
+                </div>
+            </div>
+        </div>
     </div>
 @stop
 
@@ -111,15 +186,23 @@
     <script>
         $(document).ready(function() {
             $('#target').slugify('#source');
+
             $('#date').inputmask();
-            $('#platforms').select2();
-            $('#studios').select2();
+
+            $('#platforms').select2({
+                width: '100%',
+            });
+
+            $('#studios').select2({
+                width: '100%'
+            });
+            
             $('#additional').summernote({
                 toolbar:[
                     ['style', ['bold', 'italic', 'underline']],
                     ['para', ['ul', 'ol']]
                 ],
-                height: 200,
+                height: 107,
                 disableResizeEditor: true
             });
         });
