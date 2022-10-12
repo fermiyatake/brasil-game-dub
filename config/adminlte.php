@@ -517,6 +517,21 @@ return [
                 ],
             ],
         ],
+        'Toastr' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css',
+                ]
+            ]
+        ],
         'Pace' => [
             'active' => false,
             'files' => [

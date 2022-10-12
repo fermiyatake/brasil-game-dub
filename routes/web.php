@@ -21,4 +21,8 @@ Route::get('/', function () {
 
 Route::get('/admin', [AdminController::class, 'index']);
 
-Route::get('/admin/jogos/{id}', [AdminGameController::class, 'edit']);
+Route::get('/admin/jogos/novo', [AdminGameController::class, 'create']);
+Route::get('/admin/jogos/{game}', [AdminGameController::class, 'edit'])->name('games.edit');
+
+Route::post('/admin/jogos/novo', [AdminGameController::class, 'store'])->name('games.store');
+Route::put('/admin/jogos/{game}', [AdminGameController::class, 'update'])->name('games.update');
