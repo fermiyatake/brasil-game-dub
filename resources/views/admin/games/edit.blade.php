@@ -27,7 +27,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/admin">Home</a></li>
                     <li class="breadcrumb-item"><a href="/admin/jogos">Jogos</a></li>
-                    <li class="breadcrumb-item active">Editando</li>
+                    <li class="breadcrumb-item active">{{ $game->title ?? 'Novo'}}</li>
                 </ol>
             </div>
         </div>
@@ -125,51 +125,73 @@
             </div>
         </form>
 
-        <div class="row" id="accordionProducers">
-            <div class="col-md-12" id="producers" data-toggle="collapse" data-target="#collapseProducers" aria-expanded="false" aria-controls="collapseProducers">
-                <div class="card card-secondary" role="button">
-                    <div class="card-header rounded-0">
-                        <h3 class="card-title">Elenco de Produtores</h3>
-                    </div>
-                    
-                    <div class="collapse" id="collapseProducers" aria-labelledby="producers" data-parent="#accordionProducers">
-                        <div class="card-body">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label text-dark text-bold">Ativo</label>
-                            </div>
+        @if($game->exists)
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-secondary">
+                        <div class="card-header rounded-0" id="producers" data-toggle="collapse" href="#collapseProducers" aria-expanded="false" aria-controls="collapseProducers" role="button">
+                            <h3 class="card-title">Elenco de Produtores</h3>
                         </div>
+                        
+                        <div class="collapse" id="collapseProducers">
+                            <div class="card-body" style="cursor: default !important">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button id="add" class="add action" type="button">+</button>
+                                <button id="up" type="button"><i class="fa fa-caret-up"></i></button>
+                                <button id="down" type="button"><i class="fa fa-caret-down"></i></button>
 
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                                <form method="POST" action="#" id="roleForm">
+                                    <table class="table table-bordered mt-3" id="roleTable">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 12px;"></th>
+                                                <th>Função</th>
+                                                <th>Profissional</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="roles">
+                                            @forelse($game->roles as $role)
+                                                <tr class="role">
+                                                    <td>
+                                                        <input type="radio" name="selected" class="selected">
+                                                    </td>
+
+                                                    <td class="function">
+                                                        <input type="text" class="form-control" name="role[]" value="{{ $role->function }}">
+                                                    </td>
+
+                                                    <td>
+                                                        <select class="professional" name="professional[]">
+                                                            <option value=""></option>
+                                                            <option value="{{ $role->professional->id }}" selected>{{ $role->professional->name }}</option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td class="remover"><button type="button" class="remove action"><i class="fa fa-trash"></i></button></td>
+                                                </tr>
+                                            @empty
+
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="row" id="accordionVoices">
-            <div class="col-md-12" id="voices" data-toggle="collapse" data-target="#collapseVoices" aria-expanded="false" aria-controls="collapseVoices">
-                <div class="card card-primary" role="button">
-                    <div class="card-header rounded-0">
-                        <h3 class="card-title">Elenco de Vozes</h3>
-                    </div>
-                    
-                    <div class="collapse" id="collapseVoices" aria-labelledby="voices" data-parent="#accordionVoices">
-                        <div class="card-body" >
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label text-dark text-bold">Ativo</label>
+                <div class="col-md-6">
+                    <a href="/admin/jogos/{{ $game->id }}/vozes" target="_blank">
+                        <div class="card card-primary" role="button">
+                            <div class="card-header rounded-0">
+                                <h3 class="card-title">Elenco de Vozes</h3>
                             </div>
                         </div>
-
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
     <div class="modal" tabindex="-1" role="dialog" id="modalCover">
@@ -185,6 +207,7 @@
 
                 <div class="modal-body">
                     <small>Tamanhos recomendados: <b>320x480 - 600x900 - 920x1080 - 1000x1500</b></small>
+                    
                 </div>
 
                 <div class="modal-footer">
@@ -196,13 +219,15 @@
     </div>
 @stop
 
-@section('plugins.Toastr', true)
 @section('plugins.Slugify', true)
 @section('plugins.Inputmask', true)
 @section('plugins.Select2', true)
 @section('plugins.Summernote', true)
+@section('plugins.Croppie', true)
 
 @section('js')
+    @include('admin.messages')
+
     <script>
         $(document).ready(function() {
             $('#target').slugify('#source');
@@ -230,15 +255,7 @@
 
             $('#additional').summernote('code', @json($game->additional_data));
 
-            // PHP directives
-            @if(session()->has('success'))
-                toastr.options =
-                {
-                    "closeButton" : true,
-                    "progressBar" : true
-                }
-                toastr.success("{{ session('success') }}");
-            @endif
+            $('#croppie').croppie();
         });
     </script>
 @stop

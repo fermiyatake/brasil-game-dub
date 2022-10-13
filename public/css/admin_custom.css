@@ -1,7 +1,15 @@
+.main-sidebar {
+    position: fixed !important;
+}
+
 .w-icon {
     width: 20px;
 }
 
 .nav-link p {
     margin-left: 0.5rem !important;
+}
+
+.bg-greyhound {
+    background-color: #ededed;
 }

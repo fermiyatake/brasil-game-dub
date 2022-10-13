@@ -562,6 +562,21 @@ return [
                 ],
             ],
         ],
+        'Croppie' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css'
+                ]
+            ]
+        ]
     ],
 
     /*

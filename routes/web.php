@@ -24,5 +24,11 @@ Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/jogos/novo', [AdminGameController::class, 'create']);
 Route::get('/admin/jogos/{game}', [AdminGameController::class, 'edit'])->name('games.edit');
 
+Route::get('/admin/jogos/{game}/tecnicos', [AdminGameController::class, 'editTechnicalCast']);
+Route::get('/admin/jogos/{game}/vozes', [AdminGameController::class, 'editVoiceCast']);
+
+Route::put('/admin/jogos/{game}/vozes', [AdminGameController::class, 'updateVoiceCast']);
+
+
 Route::post('/admin/jogos/novo', [AdminGameController::class, 'store'])->name('games.store');
 Route::put('/admin/jogos/{game}', [AdminGameController::class, 'update'])->name('games.update');
